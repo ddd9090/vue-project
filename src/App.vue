@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <el-button type="primary" :icon="Search">Search</el-button>
+  <RouterView />
 </template>
 
 <style scoped>
