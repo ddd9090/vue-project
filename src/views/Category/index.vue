@@ -1,36 +1,11 @@
 <script setup>
-import { getTopCategoryAPI } from '@/apis/category'
-import{getBannerAPI}from '@/apis/home'
-import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router';
 import GoodsItem from '../Home/components/GoodsItem.vue';
-import { onBeforeRouteUpdate } from 'vue-router'
+import{usebanner} from '@/views/Category/composables/usebannner'
+import{useCategory} from '@/views/Category/composables/useCategory'
 
-//获取数据
-  const categoryData = ref({})
-  const route = useRoute()
-  const getCategory = async (id) => {
-    // 如何在setup中获取路由参数 useRoute() -> route 等价于this.$route
-    const res = await getTopCategoryAPI(id)
-    categoryData.value = res.result
-  }
-  onMounted(()=>{
-    getCategory(route.params.id)
-  })
+const {categoryData} = useCategory()
 //获取banner
-const bannerList = ref([]);
-const getBanner =async ()=>{
-  const res = await getBannerAPI({
-    distributionSite:'2'
-  })
-  bannerList.value = res.result
-}
-onMounted(()=> getBanner())
-
-onBeforeRouteUpdate((to) => {
-    // 存在问题：使用最新的路由参数请求最新的分类数据
-    getCategory(to.params.id)
-  })
+const {bannerList} = usebanner()
 
 </script>
 
@@ -57,7 +32,7 @@ onBeforeRouteUpdate((to) => {
         <h3>全部分类</h3>
         <ul>
           <li v-for="i in categoryData.children" :key="i.id">
-            <RouterLink to="/">
+            <RouterLink :to="`/category/sub/${i.id}`">
               <img :src="i.picture" />
               <p>{{ i.name }}</p>
             </RouterLink>
