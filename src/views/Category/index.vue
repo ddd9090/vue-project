@@ -4,6 +4,8 @@ import{getBannerAPI}from '@/apis/home'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router';
 import GoodsItem from '../Home/components/GoodsItem.vue';
+import { onBeforeRouteUpdate } from 'vue-router'
+
 //获取数据
   const categoryData = ref({})
   const route = useRoute()
@@ -24,6 +26,12 @@ const getBanner =async ()=>{
   bannerList.value = res.result
 }
 onMounted(()=> getBanner())
+
+onBeforeRouteUpdate((to) => {
+    // 存在问题：使用最新的路由参数请求最新的分类数据
+    getCategory(to.params.id)
+  })
+
 </script>
 
 <template>
