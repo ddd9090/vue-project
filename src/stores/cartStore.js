@@ -44,7 +44,7 @@ export const useCartStore = defineStore('cart', () => {
     cartList.value = []
   }
 
-const updateNewList = async ()=>{
+  const updateNewList = async ()=>{
     const res = await findNewCartListAPI()
     cartList.value = res.result
 }
@@ -80,7 +80,8 @@ const selectedPrice = computed(() => cartList.value.filter(item => item.selected
     selectedCount,
     selectedPrice,
     cartList,
-    addCart
+    addCart,
+    updateNewList
   }
 }, {
   persist: true,
