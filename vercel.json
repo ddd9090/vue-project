@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*", 
+      "destination": "http://pcapi-xiaotuxian-front-devtest.itheima.net/:path*"
+    }
+  ]
+}
